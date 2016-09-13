@@ -1,5 +1,7 @@
 package server;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,11 +27,13 @@ public class ServerHandler {
              OutputStream streamSender = serverSocket.accept().getOutputStream();
              BufferedInputStream streamReadFile = new BufferedInputStream(new FileInputStream(pathFile))) {
 
-            int byteReaded;
-            while ((byteReaded = streamReadFile.read(buff)) != -1) {
-                streamSender.write(buff, 0, byteReaded);
-                streamSender.flush();
-            }
+//            int byteReaded;
+//            while ((byteReaded = streamReadFile.read(buff)) != -1) {
+//                streamSender.write(buff, 0, byteReaded);
+//                streamSender.flush();
+//            }
+
+            IOUtils.copy(streamReadFile, streamSender);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package client;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -25,11 +27,13 @@ public class ClientHandler {
         try (Socket socketClient = socket = new Socket(HOST_NAME, PORT);
              InputStream inputStream = socketClient.getInputStream();
              BufferedOutputStream streamWriteFile = new BufferedOutputStream(new FileOutputStream(filePath))) {
-            int byteReaded;
-            while ((byteReaded = inputStream.read(buff)) > 0) {
-                streamWriteFile.write(buff, 0, byteReaded);
-                streamWriteFile.flush();
-            }
+//            int byteReaded;
+//            while ((byteReaded = inputStream.read(buff)) > 0) {
+//                streamWriteFile.write(buff, 0, byteReaded);
+//                streamWriteFile.flush();
+//            }
+
+            IOUtils.copy(inputStream, streamWriteFile);
 
             System.out.println("Received file!");
         } catch (Exception e) {
